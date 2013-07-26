@@ -115,8 +115,10 @@ protected:
 	
 	ofxUISuperCanvas* customGui;
 	bool customToggle;
-	float customFloat1;
-	float customFloat2;
+	float fadeInDuration;
+	float fadeInDelay;
+    float fadeOutDuration;
+    float fadeOutDelay;
 	
     vector<ScrapeBox *> boxes;
     

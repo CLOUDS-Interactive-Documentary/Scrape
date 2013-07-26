@@ -22,16 +22,22 @@ static const int kNumFormats = 4;
 static ofxEasingQuad easing;
 
 //These methods let us add custom GUI parameters and respond to their events
-void ScrapeVisualSystem::selfSetupGui(){
-    
-	customGui = new ofxUISuperCanvas("CUSTOM", gui);
+void ScrapeVisualSystem::selfSetupGui()
+{    
+	customGui = new ofxUISuperCanvas("SCRAPE", gui);
 	customGui->copyCanvasStyle(gui);
 	customGui->copyCanvasProperties(gui);
-	customGui->setName("Custom");
+	customGui->setName("Scrape");
 	customGui->setWidgetFontSize(OFX_UI_FONT_SMALL);
 	
-	customGui->addSlider("Custom Float 1", 1, 1000, &customFloat1);
-	customGui->addSlider("Custom Float 2", 1, 1000, &customFloat2);
+    fadeInDuration = 500;
+    fadeInDelay = 1000;
+    fadeOutDuration = 500;
+    fadeOutDelay = 500;
+	customGui->addSlider("Fade In Duration", 1, 3000, &fadeInDuration);
+	customGui->addSlider("Fade In Delay", 0, 3000, &fadeInDelay);
+	customGui->addSlider("Fade Out Duration", 1, 3000, &fadeOutDuration);
+	customGui->addSlider("Fade Out Delay", 0, 3000, &fadeOutDelay);
 	customGui->addButton("Custom Button", false);
 	customGui->addToggle("Custom Toggle", &customToggle);
 	
@@ -251,7 +257,7 @@ void ScrapeVisualSystem::doGrow()
         box->scale = 0.0f;
         box->tex.allocate(box->w, box->h, kFormats[(int)ofRandom(kNumFormats)]);
 //        box->tex.allocate(box->w, box->h, GL_RGBA);
-        box->tween.setParameters(i, easing, ofxTween::easeOut, 0, 1, ofRandom(500), ofRandom(1000));
+        box->tween.setParameters(i, easing, ofxTween::easeOut, 0, 1, ofRandom(fadeInDuration), ofRandom(fadeInDelay));
         box->tween.start();
         
         boxes.push_back(box);
@@ -264,7 +270,7 @@ void ScrapeVisualSystem::doShrink()
 {
     // Shrink all the boxes back to 0 in sync.
     for (int i = 0; i < boxes.size(); i++) {
-        boxes[i]->tween.setParameters(i, easing, ofxTween::easeOut, 1, 0, 500, 500);
+        boxes[i]->tween.setParameters(i, easing, ofxTween::easeOut, 1, 0, fadeOutDuration, fadeOutDelay);
         boxes[i]->tween.start();
     }
     
