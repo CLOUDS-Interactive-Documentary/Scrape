@@ -21,53 +21,93 @@ static const int kNumFormats = 4;
 
 static ofxEasingQuad easing;
 
-void ScrapeVisualSystem::selfSetup()
+//These methods let us add custom GUI parameters and respond to their events
+void ScrapeVisualSystem::selfSetupGui(){
+    
+	customGui = new ofxUISuperCanvas("CUSTOM", gui);
+	customGui->copyCanvasStyle(gui);
+	customGui->copyCanvasProperties(gui);
+	customGui->setName("Custom");
+	customGui->setWidgetFontSize(OFX_UI_FONT_SMALL);
+	
+	customGui->addSlider("Custom Float 1", 1, 1000, &customFloat1);
+	customGui->addSlider("Custom Float 2", 1, 1000, &customFloat2);
+	customGui->addButton("Custom Button", false);
+	customGui->addToggle("Custom Toggle", &customToggle);
+	
+	ofAddListener(customGui->newGUIEvent, this, &ScrapeVisualSystem::selfGuiEvent);
+	
+	guis.push_back(customGui);
+	guimap[customGui->getName()] = customGui;
 }
 
+void ScrapeVisualSystem::selfGuiEvent(ofxUIEventArgs &e){
+	if(e.widget->getName() == "Custom Button"){
+		cout << "Button pressed!" << endl;
+	}
+}
+
+//Use system gui for global or logical settings, for exmpl
+void ScrapeVisualSystem::selfSetupSystemGui(){
+	
+}
+
+void ScrapeVisualSystem::guiSystemEvent(ofxUIEventArgs &e){
+	
+}
+//use render gui for display settings, like changing colors
+void ScrapeVisualSystem::selfSetupRenderGui(){
+    
+}
+
+void ScrapeVisualSystem::guiRenderEvent(ofxUIEventArgs &e){
+	
+}
+
+// selfSetup is called when the visual system is first instantiated
+// This will be called during a "loading" screen, so any big images or
+// geometry should be loaded here
+void ScrapeVisualSystem::selfSetup()
+{
+//	someImage.loadImage( getVisualSystemDataPath() + "images/someImage.png";
+//    tex.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
+}
+
+// selfPresetLoaded is called whenever a new preset is triggered
+// it'll be called right before selfBegin() and you may wish to
+// refresh anything that a preset may offset, such as stored colors or particles
 void ScrapeVisualSystem::selfPresetLoaded(string presetPath){
 	
 }
 
+// selfBegin is called when the system is ready to be shown
+// this is a good time to prepare for transitions
+// but try to keep it light weight as to not cause stuttering
 void ScrapeVisualSystem::selfBegin()
 {
     doGrow();
 }
 
-void ScrapeVisualSystem::selfEnd()
-{
-    for (int i = 0; i < boxes.size(); i++) {
-        delete boxes[i];
-    }
-    boxes.clear();
-}
-
-void ScrapeVisualSystem::selfExit()
+//do things like ofRotate/ofTranslate here
+//any type of transformation that doesn't have to do with the camera
+void ScrapeVisualSystem::selfSceneTransformation()
 {
     
 }
 
-void ScrapeVisualSystem::selfSetupSystemGui()
-{
-   
-}
-
-void ScrapeVisualSystem::selfSetupRenderGui()
-{
-    
-}
-
-void ScrapeVisualSystem::guiSystemEvent(ofxUIEventArgs &e)
-{
-    
-}
-
-void ScrapeVisualSystem::selfKeyPressed(ofKeyEventArgs & args)
-{
-    
-}
-
+//normal update call
 void ScrapeVisualSystem::selfUpdate()
 {
+    //    if (ofGetFrameNum() % 60 == 0) {
+    //        float coin = ofRandomuf();
+    //        int type;
+    //        if (coin < 0.25) type = GL_RGB;
+    //        else if (coin < 0.5) type = GL_RGBA;
+    //        else if (coin < 0.75) type = GL_LUMINANCE;
+    //        else type = GL_LUMINANCE_ALPHA;
+    //        tex.allocate(ofGetWidth(), ofGetHeight(), type);
+    //    }
+    
     if (bComplete) {
         if (bGrowing) {
             doShrink();
@@ -88,12 +128,36 @@ void ScrapeVisualSystem::selfUpdate()
     }
 }
 
+// selfDraw draws in 3D using the default ofEasyCamera
+// you can change the camera by returning getCameraRef()
 void ScrapeVisualSystem::selfDraw()
 {
+    //	sharedRenderer->setShaderPath();
+    //	sharedRenderer->bind();
+    //	sharedRenderer->unbind();
+    
+    //    sharedRenderer->getPlayer().getAmplitude();
+    //
+    //    mat->begin();
+    //    ofSphere(20);
+    //    mat->end();
+    
+    //    bool mode = true;
+    //    float offset = MIN(1.0, MAX(0.01, mouseX / (ofGetWidth() * 1.0)));
+    //    hypnoRect(1.0, offset, mode);
 }
 
+// draw any debug stuff here
+void ScrapeVisualSystem::selfDrawDebug()
+{
+    
+}
+
+// or you can use selfDrawBackground to do 2D drawings that don't use the 3D camera
 void ScrapeVisualSystem::selfDrawBackground()
 {
+    //    tex.draw(0, 0);
+    
     // Draw the Scrape boxes.
     if (bGrowing) {
         ofSetColor(255);
@@ -106,20 +170,33 @@ void ScrapeVisualSystem::selfDrawBackground()
     }
     
     // Draw some outlines.
-//    ofNoFill();
-//    ofSetColor(ofColor::white);
-//    for (int i = 0; i < boxes.size(); i++) {
-//        ofRect(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0, boxes[i]->w, boxes[i]->h);
-//    }
-//    ofFill();
+    //    ofNoFill();
+    //    ofSetColor(ofColor::white);
+    //    for (int i = 0; i < boxes.size(); i++) {
+    //        ofRect(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0, boxes[i]->w, boxes[i]->h);
+    //    }
+    //    ofFill();
 }
 
-void ScrapeVisualSystem::selfDrawDebug()
+// this is called when your system is no longer drawing.
+// Right after this selfUpdate() and selfDraw() won't be called any more
+void ScrapeVisualSystem::selfEnd()
+{
+    for (int i = 0; i < boxes.size(); i++) {
+        delete boxes[i];
+    }
+    boxes.clear();
+}
+
+// this is called when you should clear all the memory and delet anything you made in setup
+void ScrapeVisualSystem::selfExit()
 {
     
 }
 
-void ScrapeVisualSystem::selfSceneTransformation()
+//events are called when the system is active
+//Feel free to make things interactive for you, and for the user!
+void ScrapeVisualSystem::selfKeyPressed(ofKeyEventArgs & args)
 {
     
 }
@@ -136,6 +213,7 @@ void ScrapeVisualSystem::selfMouseDragged(ofMouseEventArgs& data)
 
 void ScrapeVisualSystem::selfMouseMoved(ofMouseEventArgs& data)
 {
+
 }
 
 void ScrapeVisualSystem::selfMousePressed(ofMouseEventArgs& data)
@@ -144,21 +222,6 @@ void ScrapeVisualSystem::selfMousePressed(ofMouseEventArgs& data)
 }
 
 void ScrapeVisualSystem::selfMouseReleased(ofMouseEventArgs& data)
-{
-    
-}
-
-void ScrapeVisualSystem::selfSetupGui()
-{
-    
-}
-
-void ScrapeVisualSystem::selfGuiEvent(ofxUIEventArgs &e)
-{
-    
-}
-
-void ScrapeVisualSystem::guiRenderEvent(ofxUIEventArgs &e)
 {
     
 }

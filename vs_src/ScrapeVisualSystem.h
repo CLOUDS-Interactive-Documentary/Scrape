@@ -26,13 +26,10 @@ struct ScrapeBox : ofxMtlBox
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-//TODO: rename this to your own visual system
-class ScrapeVisualSystem : public CloudsVisualSystem {
-  public:
+class ScrapeVisualSystem : public CloudsVisualSystem
+{
+public:
     
-	//TODO: Change this to the name of your visual system
-	//This determines your data path so name it at first!
-	//ie getVisualSystemDataPath() uses this
     string getSystemName(){
 		return "ScrapeSystem";
 	}
@@ -121,10 +118,8 @@ protected:
 	float customFloat1;
 	float customFloat2;
 	
-	ofImage someImage;
     vector<ScrapeBox *> boxes;
     
     bool bGrowing;
     bool bComplete;
-    
 };
