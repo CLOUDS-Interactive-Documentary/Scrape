@@ -817,8 +817,8 @@
 		3DA460BE179ED608002EC0AC /* VisualSystemsLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				3DA460C0179ED608002EC0AC /* CloudsRGBDCombinedRenderer.cpp */,
 				3DA460C1179ED608002EC0AC /* CloudsRGBDCombinedRenderer.h */,
+				3DA460C0179ED608002EC0AC /* CloudsRGBDCombinedRenderer.cpp */,
 				3DA460C2179ED608002EC0AC /* CloudsVisualSystem.cpp */,
 				3DA460C3179ED608002EC0AC /* CloudsVisualSystem.h */,
 				3DA460C5179ED608002EC0AC /* ofxLight.h */,

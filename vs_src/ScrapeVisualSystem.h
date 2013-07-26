@@ -4,7 +4,6 @@
 // VISUAL SYSTEMS
 //
 // Welcome to the EMPTY CloudsVisualSystem
-// You most likel
 //
 //
 //
@@ -42,7 +41,7 @@ class ScrapeVisualSystem : public CloudsVisualSystem {
     void selfSetupGui();
     void selfGuiEvent(ofxUIEventArgs &e);
     
-	//Use system gui for global or logical settings
+	//Use system gui for global or logical settings, for exmpl
     void selfSetupSystemGui();
     void guiSystemEvent(ofxUIEventArgs &e);
     
@@ -50,17 +49,17 @@ class ScrapeVisualSystem : public CloudsVisualSystem {
     void selfSetupRenderGui();
     void guiRenderEvent(ofxUIEventArgs &e);
 
-	//setup is called when the visual system is first instantiated
-	//This will be called during a "loading" screen, so any big images or
-	//geometry should be loaded here
+	// selfSetup is called when the visual system is first instantiated
+	// This will be called during a "loading" screen, so any big images or
+	// geometry should be loaded here
     void selfSetup();
 
-	// begin is called when the system is ready to be shown
+	// selfBegin is called when the system is ready to be shown
 	// this is a good time to prepare for transitions
 	// but try to keep it light weight as to not cause stuttering
     void selfBegin();
 
-	// This is called whenever a new preset is triggered
+	// selfPresetLoaded is called whenever a new preset is triggered
 	// it'll be called right before selfBegin() and you may wish to
 	// refresh anything that a preset may offset, such as stored colors or particles
 	void selfPresetLoaded(string presetPath);
@@ -79,6 +78,9 @@ class ScrapeVisualSystem : public CloudsVisualSystem {
     // draw any debug stuff here
 	void selfDrawDebug();
 
+	//draws through RGBD camera;
+//	void selfDrawRGBD();
+	
 	// or you can use selfDrawBackground to do 2D drawings that don't use the 3D camera
 	void selfDrawBackground();
 
@@ -113,6 +115,11 @@ protected:
     
     //  Your Stuff
     //
+	
+	ofxUISuperCanvas* customGui;
+	bool customToggle;
+	float customFloat1;
+	float customFloat2;
 	
 	ofImage someImage;
     vector<ScrapeBox *> boxes;
