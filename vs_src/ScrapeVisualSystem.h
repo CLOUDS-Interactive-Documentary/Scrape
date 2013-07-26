@@ -100,6 +100,9 @@ class ScrapeVisualSystem : public CloudsVisualSystem {
     void selfMouseReleased(ofMouseEventArgs& data);
 	
 
+    void doGrow();
+    void doShrink();
+    
     // if you use a custom camera to fly through the scene
 	// you must implement this method for the transitions to work properly
 //	ofCamera& getCameraRef(){
@@ -112,4 +115,9 @@ protected:
     //
 	
 	ofImage someImage;
+    vector<ScrapeBox *> boxes;
+    
+    bool bGrowing;
+    bool bComplete;
+    
 };
