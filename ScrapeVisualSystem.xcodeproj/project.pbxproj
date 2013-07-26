@@ -85,6 +85,8 @@
 		644DD80517A2072B009950CB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 644DD80217A2072B009950CB /* CoreMedia.framework */; };
 		644DD80617A2072B009950CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 644DD80317A2072B009950CB /* QuartzCore.framework */; };
 		644DD81C17A2C6B9009950CB /* ofxMtlBoxFitting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 644DD81B17A2C6B9009950CB /* ofxMtlBoxFitting.cpp */; };
+		644DD82617A2ECC5009950CB /* CloudsRGBDCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 644DD82217A2ECC4009950CB /* CloudsRGBDCamera.cpp */; };
+		644DD82717A2ECC5009950CB /* CloudsRGBDVideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 644DD82417A2ECC5009950CB /* CloudsRGBDVideoPlayer.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -103,7 +105,6 @@
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
 		E4EB6799138ADC1D00A09F29 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E761F4D81622CA3D00029E43 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E761F4D71622CA3D00029E43 /* Accelerate.framework */; };
-		E7D26E5817A2E63A00652876 /* CloudsRGBDVideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7D26E5617A2E63A00652876 /* CloudsRGBDVideoPlayer.cpp */; };
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 /* End PBXBuildFile section */
@@ -382,6 +383,10 @@
 		644DD80317A2072B009950CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		644DD81A17A2C6B0009950CB /* ofxMtlBoxFitting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxMtlBoxFitting.h; sourceTree = "<group>"; };
 		644DD81B17A2C6B9009950CB /* ofxMtlBoxFitting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMtlBoxFitting.cpp; sourceTree = "<group>"; };
+		644DD82217A2ECC4009950CB /* CloudsRGBDCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CloudsRGBDCamera.cpp; sourceTree = "<group>"; };
+		644DD82317A2ECC4009950CB /* CloudsRGBDCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudsRGBDCamera.h; sourceTree = "<group>"; };
+		644DD82417A2ECC5009950CB /* CloudsRGBDVideoPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CloudsRGBDVideoPlayer.cpp; sourceTree = "<group>"; };
+		644DD82517A2ECC5009950CB /* CloudsRGBDVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudsRGBDVideoPlayer.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -404,8 +409,6 @@
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
 		E761F4D71622CA3D00029E43 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
-		E7D26E5617A2E63A00652876 /* CloudsRGBDVideoPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CloudsRGBDVideoPlayer.cpp; sourceTree = "<group>"; };
-		E7D26E5717A2E63A00652876 /* CloudsRGBDVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudsRGBDVideoPlayer.h; sourceTree = "<group>"; };
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -817,10 +820,12 @@
 		3DA460BE179ED608002EC0AC /* VisualSystemsLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				644DD82217A2ECC4009950CB /* CloudsRGBDCamera.cpp */,
+				644DD82317A2ECC4009950CB /* CloudsRGBDCamera.h */,
+				644DD82417A2ECC5009950CB /* CloudsRGBDVideoPlayer.cpp */,
+				644DD82517A2ECC5009950CB /* CloudsRGBDVideoPlayer.h */,
 				3DA460C2179ED608002EC0AC /* CloudsVisualSystem.cpp */,
 				3DA460C3179ED608002EC0AC /* CloudsVisualSystem.h */,
-				E7D26E5617A2E63A00652876 /* CloudsRGBDVideoPlayer.cpp */,
-				E7D26E5717A2E63A00652876 /* CloudsRGBDVideoPlayer.h */,
 				3DA460C5179ED608002EC0AC /* ofxLight.h */,
 				3DA460C6179ED608002EC0AC /* README.md */,
 			);
@@ -1265,7 +1270,8 @@
 				644DD7FC17A206F2009950CB /* ofxAVFVideoPlayer.mm in Sources */,
 				644DD7FD17A206F2009950CB /* ofxAVFVideoRenderer.m in Sources */,
 				644DD81C17A2C6B9009950CB /* ofxMtlBoxFitting.cpp in Sources */,
-				E7D26E5817A2E63A00652876 /* CloudsRGBDVideoPlayer.cpp in Sources */,
+				644DD82617A2ECC5009950CB /* CloudsRGBDCamera.cpp in Sources */,
+				644DD82717A2ECC5009950CB /* CloudsRGBDVideoPlayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

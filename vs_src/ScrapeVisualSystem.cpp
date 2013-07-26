@@ -4,7 +4,7 @@
 
 #include "ScrapeVisualSystem.h"
 
-#include "CloudsRGBDCombinedRenderer.h"
+#include "CloudsRGBDVideoPlayer.h"
 #ifdef AVF_PLAYER
 #include "ofxAVFVideoPlayer.h"
 #endif
