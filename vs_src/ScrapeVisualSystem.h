@@ -13,15 +13,29 @@
 
 #include "CloudsVisualSystem.h"
 
+#include "ofxMtlBoxFitting.h"
+#include "ofxTween.h"
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+struct ScrapeBox : ofxMtlBox
+{
+    float scale;
+    ofTexture tex;
+    ofxTween tween;
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 //TODO: rename this to your own visual system
-class CloudsVisualSystemEmpty : public CloudsVisualSystem {
+class ScrapeVisualSystem : public CloudsVisualSystem {
   public:
     
 	//TODO: Change this to the name of your visual system
 	//This determines your data path so name it at first!
 	//ie getVisualSystemDataPath() uses this
     string getSystemName(){
-		return "EmptySystem";
+		return "ScrapeSystem";
 	}
 
 	//These methods let us add custom GUI parameters and respond to their events

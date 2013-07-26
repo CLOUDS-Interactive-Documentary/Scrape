@@ -1,9 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
-#include "CloudsVisualSystemEmpty.h"
+#include "ScrapeVisualSystem.h"
 
-class testApp : public ofBaseApp{
+class testApp : public ofBaseApp
+{
   public:
 	void setup();
 	void update();
@@ -20,5 +21,5 @@ class testApp : public ofBaseApp{
 	void gotMessage(ofMessage msg);
 	void exit();
 		
-	CloudsVisualSystemEmpty visualSystem;
+	ScrapeVisualSystem visualSystem;
 };
