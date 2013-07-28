@@ -126,7 +126,12 @@ void ScrapeVisualSystem::selfUpdate()
     // Update the Scrape box scales, checking if all the animations are complete.
     bComplete = true;
     for (int i = 0; i < boxes.size(); i++) {
-        boxes[i]->scale = boxes[i]->tween.update();
+        if (bGrowing) {
+            boxes[i]->scale = boxes[i]->tween.update();
+        }
+        else {
+            boxes[i]->alpha = boxes[i]->tween.update();
+        }
         
         if (!boxes[i]->tween.isCompleted()) {
             bComplete = false;

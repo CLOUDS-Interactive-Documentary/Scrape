@@ -20,6 +20,7 @@
 struct ScrapeBox : ofxMtlBox
 {
     float scale;
+    float alpha;
     ofTexture tex;
     ofxTween tween;
 };
