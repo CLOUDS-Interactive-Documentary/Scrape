@@ -118,7 +118,13 @@ protected:
     float fboSize;
     
 	ofxUISuperCanvas* customGui;
-	bool customToggle;
+    
+    bool b3DToggle;
+    
+	float boxDivWidth;
+    float boxDivHeight;
+    float boxMaxSubDivs;
+    
 	float fadeInDuration;
 	float fadeInDelay;
     float fadeOutDuration;

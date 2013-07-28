@@ -29,18 +29,30 @@ void ScrapeVisualSystem::selfSetupGui()
 	customGui->copyCanvasProperties(gui);
 	customGui->setName("Scrape");
 	customGui->setWidgetFontSize(OFX_UI_FONT_SMALL);
+    
+    b3DToggle = false;
+    customGui->addToggle("Go 3D!", &b3DToggle);
+
+    customGui->addSpacer();
+    
+    boxDivWidth = 24;
+    boxDivHeight = 24;
+    boxMaxSubDivs = 8;
+    customGui->addSlider("Box Div Width", 1, 256, &boxDivWidth);
+	customGui->addSlider("Box Div Height", 1, 256, &boxDivHeight);
+	customGui->addSlider("Box Max Subdivisions", 1, 24, &boxMaxSubDivs);
 	
+    customGui->addSpacer();
+    
     fadeInDuration = 500;
     fadeInDelay = 1000;
     fadeOutDuration = 500;
     fadeOutDelay = 500;
-	customGui->addSlider("Fade In Duration", 1, 3000, &fadeInDuration);
+	customGui->addSlider("Fade In Duration", 50, 3000, &fadeInDuration);
 	customGui->addSlider("Fade In Delay", 0, 3000, &fadeInDelay);
-	customGui->addSlider("Fade Out Duration", 1, 3000, &fadeOutDuration);
+	customGui->addSlider("Fade Out Duration", 50, 3000, &fadeOutDuration);
 	customGui->addSlider("Fade Out Delay", 0, 3000, &fadeOutDelay);
-	customGui->addButton("Custom Button", false);
-	customGui->addToggle("Custom Toggle", &customToggle);
-	
+    
 	ofAddListener(customGui->newGUIEvent, this, &ScrapeVisualSystem::selfGuiEvent);
 	
 	guis.push_back(customGui);
@@ -48,9 +60,7 @@ void ScrapeVisualSystem::selfSetupGui()
 }
 
 void ScrapeVisualSystem::selfGuiEvent(ofxUIEventArgs &e){
-	if(e.widget->getName() == "Custom Button"){
-		cout << "Button pressed!" << endl;
-	}
+
 }
 
 //Use system gui for global or logical settings, for exmpl
@@ -104,16 +114,6 @@ void ScrapeVisualSystem::selfSceneTransformation()
 //normal update call
 void ScrapeVisualSystem::selfUpdate()
 {
-    //    if (ofGetFrameNum() % 60 == 0) {
-    //        float coin = ofRandomuf();
-    //        int type;
-    //        if (coin < 0.25) type = GL_RGB;
-    //        else if (coin < 0.5) type = GL_RGBA;
-    //        else if (coin < 0.75) type = GL_LUMINANCE;
-    //        else type = GL_LUMINANCE_ALPHA;
-    //        tex.allocate(ofGetWidth(), ofGetHeight(), type);
-    //    }
-    
     if (bComplete) {
         if (bGrowing) {
             doShrink();
@@ -168,19 +168,24 @@ void ScrapeVisualSystem::selfUpdate()
 // you can change the camera by returning getCameraRef()
 void ScrapeVisualSystem::selfDraw()
 {
-    //	sharedRenderer->setShaderPath();
-    //	sharedRenderer->bind();
-    //	sharedRenderer->unbind();
+    if (!b3DToggle) return;
     
-    //    sharedRenderer->getPlayer().getAmplitude();
-    //
-    //    mat->begin();
-    //    ofSphere(20);
-    //    mat->end();
+    // Scale up the texture since we're not working with normalized tex coords.
+    glMatrixMode(GL_TEXTURE);
+    glPushMatrix();
+    ofScale(contentFbo.getWidth(), contentFbo.getHeight());
+    glMatrixMode(GL_MODELVIEW);
     
-    //    bool mode = true;
-    //    float offset = MIN(1.0, MAX(0.01, mouseX / (ofGetWidth() * 1.0)));
-    //    hypnoRect(1.0, offset, mode);
+    // Draw the sphere.
+    contentFbo.getTextureReference().bind();
+    {
+        ofSphere(0, 0, 0, 128);
+    }
+    contentFbo.getTextureReference().unbind();
+    
+    glMatrixMode(GL_TEXTURE);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
 }
 
 // draw any debug stuff here
@@ -192,7 +197,7 @@ void ScrapeVisualSystem::selfDrawDebug()
 // or you can use selfDrawBackground to do 2D drawings that don't use the 3D camera
 void ScrapeVisualSystem::selfDrawBackground()
 {
-    //    tex.draw(0, 0);
+    if (b3DToggle) return;
     
     contentFbo.draw(0, 0);
 }
