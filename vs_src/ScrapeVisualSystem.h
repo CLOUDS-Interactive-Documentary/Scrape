@@ -114,6 +114,9 @@ protected:
     //  Your Stuff
     //
 	
+    ofFbo contentFbo;
+    float fboSize;
+    
 	ofxUISuperCanvas* customGui;
 	bool customToggle;
 	float fadeInDuration;

@@ -75,8 +75,8 @@ void ScrapeVisualSystem::guiRenderEvent(ofxUIEventArgs &e){
 // geometry should be loaded here
 void ScrapeVisualSystem::selfSetup()
 {
-//	someImage.loadImage( getVisualSystemDataPath() + "images/someImage.png";
-//    tex.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
+    fboSize = ofNextPow2(MAX(ofGetWidth(), ofGetHeight()));
+    contentFbo.allocate(fboSize, fboSize);
 }
 
 // selfPresetLoaded is called whenever a new preset is triggered
@@ -137,6 +137,31 @@ void ScrapeVisualSystem::selfUpdate()
             bComplete = false;
         }
     }
+    
+    ofPushStyle();
+    
+    // Draw the textures into the FBO.
+    contentFbo.begin();
+    {
+        ofClear(0, 0);
+        
+        // Draw the Scrape boxes.
+        for (int i = 0; i < boxes.size(); i++) {
+            ofSetColor(255, 255 * boxes[i]->alpha);
+            boxes[i]->tex.draw(boxes[i]->x - (boxes[i]->w * boxes[i]->scale) / 2.0, boxes[i]->y - (boxes[i]->h * boxes[i]->scale) / 2.0, boxes[i]->w * boxes[i]->scale, boxes[i]->h * boxes[i]->scale);
+        }
+        
+        // Draw some outlines.
+        //    ofNoFill();
+        //    ofSetColor(ofColor::white);
+        //    for (int i = 0; i < boxes.size(); i++) {
+        //        ofRect(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0, boxes[i]->w, boxes[i]->h);
+        //    }
+        //    ofFill();
+    }
+    contentFbo.end();
+    
+    ofPopStyle();
 }
 
 // selfDraw draws in 3D using the default ofEasyCamera
@@ -169,24 +194,7 @@ void ScrapeVisualSystem::selfDrawBackground()
 {
     //    tex.draw(0, 0);
     
-    // Draw the Scrape boxes.
-    if (bGrowing) {
-        ofSetColor(255);
-    }
-    for (int i = 0; i < boxes.size(); i++) {
-        if (!bGrowing) {
-            ofSetColor(255, 255 * boxes[i]->scale);
-        }
-        boxes[i]->tex.draw(boxes[i]->x - (boxes[i]->w * boxes[i]->scale) / 2.0, boxes[i]->y - (boxes[i]->h * boxes[i]->scale) / 2.0, boxes[i]->w * boxes[i]->scale, boxes[i]->h * boxes[i]->scale);
-    }
-    
-    // Draw some outlines.
-    //    ofNoFill();
-    //    ofSetColor(ofColor::white);
-    //    for (int i = 0; i < boxes.size(); i++) {
-    //        ofRect(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0, boxes[i]->w, boxes[i]->h);
-    //    }
-    //    ofFill();
+    contentFbo.draw(0, 0);
 }
 
 // this is called when your system is no longer drawing.
@@ -202,7 +210,7 @@ void ScrapeVisualSystem::selfEnd()
 // this is called when you should clear all the memory and delet anything you made in setup
 void ScrapeVisualSystem::selfExit()
 {
-    
+
 }
 
 //events are called when the system is active
@@ -249,7 +257,7 @@ void ScrapeVisualSystem::doGrow()
     
     // Create a box fitting grid.
     ofxMtlBoxFitting boxFitting;
-    boxFitting.setup(ofGetWidth(), ofGetHeight(), 24, 24, 8);
+    boxFitting.setup(fboSize, fboSize, boxDivWidth, boxDivHeight, boxMaxSubDivs);
     boxFitting.generate(ofGetSystemTime());
     
     // Build some scrape boxes with the box fitting data and grow them.
@@ -260,6 +268,7 @@ void ScrapeVisualSystem::doGrow()
         box->w = boxFitting.boxes[i].w;
         box->h = boxFitting.boxes[i].h;
         box->scale = 0.0f;
+        box->alpha = 1.0f;
         box->tex.allocate(box->w, box->h, kFormats[(int)ofRandom(kNumFormats)]);
 //        box->tex.allocate(box->w, box->h, GL_RGBA);
         box->tween.setParameters(i, easing, ofxTween::easeOut, 0, 1, ofRandom(fadeInDuration), ofRandom(fadeInDelay));
