@@ -31,7 +31,7 @@ class ScrapeVisualSystem : public CloudsVisualSystem
 public:
     
     string getSystemName(){
-		return "ScrapeSystem";
+		return "Scrape";
 	}
 
 	//These methods let us add custom GUI parameters and respond to their events
