@@ -1,0 +1,52 @@
+<Canvas>
+    <Kind>42</Kind>
+    <Name>Scrape</Name>
+    <IsMinified>0</IsMinified>
+    <XPosition>1508.000000000</XPosition>
+    <YPosition>399.000000000</YPosition>
+</Canvas>
+<Widget>
+    <Kind>2</Kind>
+    <Name>Go 3D!</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>3D Sphere Radius</Name>
+    <Value>148.768478394</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>Box Div Width</Name>
+    <Value>60.039409637</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>Box Div Height</Name>
+    <Value>23.610836029</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>Box Max Subdivisions</Name>
+    <Value>3.039408922</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>Fade In Duration</Name>
+    <Value>369.704437256</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>Fade In Delay</Name>
+    <Value>2349.753662109</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>Fade Out Duration</Name>
+    <Value>1009.113342285</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>Fade Out Delay</Name>
+    <Value>502.463043213</Value>
+</Widget>
