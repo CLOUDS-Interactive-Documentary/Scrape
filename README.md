@@ -1,3 +1,17 @@
+# Review Notes
+
+* 2D is much more representative
+* 3D is more about aesthetics
+
+Things to try:
+
+* a bump map
+* size of texture changes its radius on the sphere
+* tween from one pixel to the next (layer FBOs, compare pixels at same position, lerp OR look into data-moshing)
+* texture a wall and keep adding to it, like the textures are stacking infinitely (ping pong FBOs)
+* run a face tracker on FBO and pull out face ROIs
+
+
 # Empty Visual System 
 
 Welcome to the CLOUDS Interactive Documentary CodeStorm! We'll be creating Visual Systems, modular visual sketches used that are used along with the pointcloud interviews to illustrate the concepts presented in the film.
