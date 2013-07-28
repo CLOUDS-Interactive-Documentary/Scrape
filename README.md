@@ -5,11 +5,11 @@
 
 Things to try:
 
-* a bump map
-* size of texture changes its radius on the sphere
-* tween from one pixel to the next (layer FBOs, compare pixels at same position, lerp OR look into data-moshing)
-* texture a wall and keep adding to it, like the textures are stacking infinitely (ping pong FBOs)
-* run a face tracker on FBO and pull out face ROIs
+* A bump map (but don't go crazy).
+* Size of texture => its radius on the sphere.
+* Tween from one pixel to the next (layer FBOs, compare pixels at same position, lerp OR look into data-moshing).
+* Texture a wall and keep adding to it, like the textures are stacking infinitely (ping pong FBOs? might not work because of alpha).
+* Run a face tracker on FBO and pull out face ROIs.
 
 
 # Empty Visual System 
