@@ -79,6 +79,7 @@
 		4695E2BD17512E45003001E2 /* ofxSwarmBehavior.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4695E2AA17512E45003001E2 /* ofxSwarmBehavior.cpp */; };
 		4695E2BE17512E45003001E2 /* ofxVerletSolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4695E2AD17512E45003001E2 /* ofxVerletSolver.cpp */; };
 		4695E2CA17513D99003001E2 /* ofxCameraSaveLoad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4695E2C817513D99003001E2 /* ofxCameraSaveLoad.cpp */; };
+		64448D4617A4CEA7003D185B /* ScrapeCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64448D4517A4CEA7003D185B /* ScrapeCamera.cpp */; };
 		644DD7FC17A206F2009950CB /* ofxAVFVideoPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 644DD7F717A206F2009950CB /* ofxAVFVideoPlayer.mm */; };
 		644DD7FD17A206F2009950CB /* ofxAVFVideoRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 644DD7F917A206F2009950CB /* ofxAVFVideoRenderer.m */; };
 		644DD80417A2072B009950CB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 644DD80117A2072B009950CB /* AVFoundation.framework */; };
@@ -374,6 +375,8 @@
 		4695E2AE17512E45003001E2 /* ofxVerletSolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVerletSolver.h; sourceTree = "<group>"; };
 		4695E2C817513D99003001E2 /* ofxCameraSaveLoad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCameraSaveLoad.cpp; sourceTree = "<group>"; };
 		4695E2C917513D99003001E2 /* ofxCameraSaveLoad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCameraSaveLoad.h; sourceTree = "<group>"; };
+		64448D4417A4CE99003D185B /* ScrapeCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrapeCamera.h; sourceTree = "<group>"; };
+		64448D4517A4CEA7003D185B /* ScrapeCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScrapeCamera.cpp; sourceTree = "<group>"; };
 		644DD7F617A206F2009950CB /* ofxAVFVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxAVFVideoPlayer.h; sourceTree = "<group>"; };
 		644DD7F717A206F2009950CB /* ofxAVFVideoPlayer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ofxAVFVideoPlayer.mm; sourceTree = "<group>"; };
 		644DD7F817A206F2009950CB /* ofxAVFVideoRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxAVFVideoRenderer.h; sourceTree = "<group>"; };
@@ -809,6 +812,8 @@
 		3DA45C5F179DB6C3002EC0AC /* vs_src */ = {
 			isa = PBXGroup;
 			children = (
+				64448D4417A4CE99003D185B /* ScrapeCamera.h */,
+				64448D4517A4CEA7003D185B /* ScrapeCamera.cpp */,
 				3DA460BB179EC5C2002EC0AC /* ScrapeVisualSystem.h */,
 				3DA460BA179EC5C2002EC0AC /* ScrapeVisualSystem.cpp */,
 				644DD81A17A2C6B0009950CB /* ofxMtlBoxFitting.h */,
@@ -1272,6 +1277,7 @@
 				644DD81C17A2C6B9009950CB /* ofxMtlBoxFitting.cpp in Sources */,
 				644DD82617A2ECC5009950CB /* CloudsRGBDCamera.cpp in Sources */,
 				644DD82717A2ECC5009950CB /* CloudsRGBDVideoPlayer.cpp in Sources */,
+				64448D4617A4CEA7003D185B /* ScrapeCamera.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

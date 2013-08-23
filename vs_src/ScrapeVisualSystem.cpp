@@ -87,6 +87,14 @@ void ScrapeVisualSystem::selfSetup()
 {
     fboSize = ofNextPow2(MAX(ofGetWidth(), ofGetHeight()));
     contentFbo.allocate(fboSize, fboSize);
+    
+//    domeCamera.setup();
+//    domeCamera.sideDistance = 360;
+//	domeCamera.frontDistance = 147.54;
+//	domeCamera.sidePullback = -48;
+//	domeCamera.liftAmount = 200;
+//	domeCamera.liftRange = 65;
+//	domeCamera.dropAmount = 0;
 }
 
 // selfPresetLoaded is called whenever a new preset is triggered
@@ -113,7 +121,7 @@ void ScrapeVisualSystem::selfSceneTransformation()
 
 //normal update call
 void ScrapeVisualSystem::selfUpdate()
-{
+{    
     if (bComplete) {
         if (bGrowing) {
             doShrink();
@@ -162,6 +170,9 @@ void ScrapeVisualSystem::selfUpdate()
     contentFbo.end();
     
     ofPopStyle();
+//    
+//    ofVec3f campos = getCameraRef().getPosition();
+//    ofVec3f target = getCameraRef();
 }
 
 // selfDraw draws in 3D using the default ofEasyCamera
@@ -179,7 +190,7 @@ void ScrapeVisualSystem::selfDraw()
     // Draw the sphere.
     contentFbo.getTextureReference().bind();
     {
-        ofSphere(0, 0, 0, 128);
+        ofSphere(0, 0, 0, 1280);
     }
     contentFbo.getTextureReference().unbind();
     
@@ -210,6 +221,8 @@ void ScrapeVisualSystem::selfEnd()
         delete boxes[i];
     }
     boxes.clear();
+    
+    domeCamera.end();
 }
 
 // this is called when you should clear all the memory and delet anything you made in setup
