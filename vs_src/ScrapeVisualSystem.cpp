@@ -380,7 +380,7 @@ void ScrapeVisualSystem::doGrow()
 //        box->tex.allocate(box->w, box->h, GL_RGBA);
         
         // Start growing the box.
-        box->tween.setParameters(i, easing, ofxTween::easeOut, 0, 1, ofRandom(fadeInDuration), ofRandom(fadeInDelay));
+        box->tween.setParameters(i, easing, ofxTween::easeOut, 0, 1, ofRandom(fadeInDuration / 2.0, fadeInDuration), ofRandom(fadeInDelay));
         box->tween.start();
         
         boxes.push_back(box);
