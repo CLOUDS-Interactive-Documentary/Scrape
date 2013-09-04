@@ -2,8 +2,8 @@
     <Kind>42</Kind>
     <Name>Presets</Name>
     <IsMinified>0</IsMinified>
-    <XPosition>425.000061035</XPosition>
-    <YPosition>1.000000000</YPosition>
+    <XPosition>213.000045776</XPosition>
+    <YPosition>826.000000000</YPosition>
 </Canvas>
 <Widget>
     <Kind>2</Kind>
@@ -17,17 +17,12 @@
 </Widget>
 <Widget>
     <Kind>2</Kind>
-    <Name>BIG STACKS</Name>
+    <Name>SPYWALL</Name>
     <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
-    <Name>GRANULAR</Name>
-    <Value>0</Value>
-</Widget>
-<Widget>
-    <Kind>2</Kind>
-    <Name>IN YOUR FACE</Name>
+    <Name>TONY&apos;S DEATH STAR</Name>
     <Value>0</Value>
 </Widget>
 <Widget>
@@ -37,7 +32,7 @@
 </Widget>
 <Widget>
     <Kind>2</Kind>
-    <Name>SPYWALL</Name>
+    <Name>BIG STACKS</Name>
     <Value>0</Value>
 </Widget>
 <Widget>
@@ -47,6 +42,6 @@
 </Widget>
 <Widget>
     <Kind>2</Kind>
-    <Name>TONY&apos;S DEATH STAR</Name>
+    <Name>GRANULAR</Name>
     <Value>1</Value>
 </Widget>
