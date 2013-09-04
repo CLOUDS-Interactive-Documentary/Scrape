@@ -236,39 +236,54 @@ void ScrapeVisualSystem::selfDraw()
         glMatrixMode(GL_MODELVIEW);
     }
     else if (mode == MODE_EXPLODE) {
+        ofSetColor(255);
+        ofSphere(ofVec3f(), 25);
+        
         // Draw the planes.
-        contentFbo.getTextureReference().bind();
+//        contentFbo.getTextureReference().bind();
         {
-            {
-                for (int i = 0; i < boxes.size(); i++) {
-                    // Convert the spherical coordinates to their Cartesian counterparts.
-                    float x = boxes[i]->radius * sinf(boxes[i]->theta) * cosf(boxes[i]->phi);
-                    float y = boxes[i]->radius * sinf(boxes[i]->theta) * sinf(boxes[i]->phi);
-                    float z = boxes[i]->radius * cosf(boxes[i]->theta);
-                    
-                    ofPushMatrix();
-                    billBoard(getCameraRef().getGlobalPosition(), ofVec3f(x, y, z));
-                    
-//                    ofxBillboardBeginSpherical(ofVec3f(), ofVec3f(x, y, z));
-                    
-                    glBegin(GL_QUADS);
+            for (int i = 0; i < boxes.size(); i++) {
+                // Convert the spherical coordinates to their Cartesian counterparts.
+                float x = boxes[i]->radius * sinf(boxes[i]->theta) * cosf(boxes[i]->phi);
+                float y = boxes[i]->radius * sinf(boxes[i]->theta) * sinf(boxes[i]->phi);
+                float z = boxes[i]->radius * cosf(boxes[i]->theta);
+                
+                ofPushMatrix();
+                ofTranslate(x, y, z);
+                
+                GLfloat modelview[16];
+                glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
+                ofVec3f translation(modelview[12], modelview[13], modelview[14]);
+                
+                ofVec3f absPos(x, y, z);
+                absPos += translation;
+                
+                
+//                ofPushMatrix();
+//                billBoard(ofVec3f(), translation);
+                
+                ofxBillboardBeginSpherical(ofVec3f(), translation);
 
-                    glTexCoord2f(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0);
-                    glVertex3f(x - boxes[i]->w / 2.0, y - boxes[i]->h / 2.0, z);
-                    glTexCoord2f(boxes[i]->x + boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0);
-                    glVertex3f(x + boxes[i]->w / 2.0, y - boxes[i]->h / 2.0, z);
-                    glTexCoord2f(boxes[i]->x + boxes[i]->w / 2.0, boxes[i]->y + boxes[i]->h / 2.0);
-                    glVertex3f(x + boxes[i]->w / 2.0, y + boxes[i]->h / 2.0, z);
-                    glTexCoord2f(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y + boxes[i]->h / 2.0);
-                    glVertex3f(x - boxes[i]->w / 2.0, y + boxes[i]->h / 2.0, z);
-                    
-                    glEnd();
+                ofRect(-25, -25, 50, 50);
+                
+//                glBegin(GL_QUADS);
+//
+//                glTexCoord2f(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0);
+//                glVertex3f(x - boxes[i]->w / 2.0, y - boxes[i]->h / 2.0, z);
+//                glTexCoord2f(boxes[i]->x + boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0);
+//                glVertex3f(x + boxes[i]->w / 2.0, y - boxes[i]->h / 2.0, z);
+//                glTexCoord2f(boxes[i]->x + boxes[i]->w / 2.0, boxes[i]->y + boxes[i]->h / 2.0);
+//                glVertex3f(x + boxes[i]->w / 2.0, y + boxes[i]->h / 2.0, z);
+//                glTexCoord2f(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y + boxes[i]->h / 2.0);
+//                glVertex3f(x - boxes[i]->w / 2.0, y + boxes[i]->h / 2.0, z);
+//                
+//                glEnd();
 
-                    ofxBillboardEnd();
-                }
+                ofxBillboardEnd();
+                ofPopMatrix();
             }
         }
-        contentFbo.getTextureReference().unbind();
+//        contentFbo.getTextureReference().unbind();
     }
 }
 
@@ -371,7 +386,7 @@ void ScrapeVisualSystem::doGrow()
         // Set the 3D box params.
         box->theta = ofRandomuf() * TWO_PI;
         box->phi = ofRandomuf() * TWO_PI;
-        box->radius = ofRandomuf() * 300 + 1000;
+        box->radius = 1000; //ofRandomuf() * 300 + 1000;
         
         // Allocate the texture, but keep it empty!
         box->tex.allocate(box->w, box->h, kFormats[(int)ofRandom(kNumFormats)]);
