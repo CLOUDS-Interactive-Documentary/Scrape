@@ -23,7 +23,8 @@ static const int kNumFormats = 4;
 
 static ofxEasingQuad easing;
 
-//These methods let us add custom GUI parameters and respond to their events
+//--------------------------------------------------------------
+// These methods let us add custom GUI parameters and respond to their events
 void ScrapeVisualSystem::selfSetupGui()
 {    
 	customGui = new ofxUISuperCanvas("SCRAPE", gui);
@@ -68,6 +69,7 @@ void ScrapeVisualSystem::selfSetupGui()
 	guimap[customGui->getName()] = customGui;
 }
 
+//--------------------------------------------------------------
 void ScrapeVisualSystem::selfGuiEvent(ofxUIEventArgs &e)
 {
     if (e.getName() == "2D" && e.getToggle()->getValue()) {
@@ -101,6 +103,7 @@ void ScrapeVisualSystem::guiRenderEvent(ofxUIEventArgs &e){
 	
 }
 
+//--------------------------------------------------------------
 // selfSetup is called when the visual system is first instantiated
 // This will be called during a "loading" screen, so any big images or
 // geometry should be loaded here
@@ -108,14 +111,6 @@ void ScrapeVisualSystem::selfSetup()
 {
     fboSize = ofNextPow2(MAX(ofGetWidth(), ofGetHeight()));
     contentFbo.allocate(fboSize, fboSize);
-    
-//    domeCamera.setup();
-//    domeCamera.sideDistance = 360;
-//	domeCamera.frontDistance = 147.54;
-//	domeCamera.sidePullback = -48;
-//	domeCamera.liftAmount = 200;
-//	domeCamera.liftRange = 65;
-//	domeCamera.dropAmount = 0;
 }
 
 // selfPresetLoaded is called whenever a new preset is triggered
@@ -125,6 +120,7 @@ void ScrapeVisualSystem::selfPresetLoaded(string presetPath){
 	
 }
 
+//--------------------------------------------------------------
 // selfBegin is called when the system is ready to be shown
 // this is a good time to prepare for transitions
 // but try to keep it light weight as to not cause stuttering
@@ -140,7 +136,8 @@ void ScrapeVisualSystem::selfSceneTransformation()
     
 }
 
-//normal update call
+//--------------------------------------------------------------
+// normal update call
 void ScrapeVisualSystem::selfUpdate()
 {    
     if (bComplete) {
@@ -213,11 +210,9 @@ void ScrapeVisualSystem::selfUpdate()
     contentFbo.end();
     
     ofPopStyle();
-//    
-//    ofVec3f campos = getCameraRef().getPosition();
-//    ofVec3f target = getCameraRef();
 }
 
+//--------------------------------------------------------------
 // selfDraw draws in 3D using the default ofEasyCamera
 // you can change the camera by returning getCameraRef()
 void ScrapeVisualSystem::selfDraw()
@@ -283,6 +278,7 @@ void ScrapeVisualSystem::selfDrawDebug()
     
 }
 
+//--------------------------------------------------------------
 // or you can use selfDrawBackground to do 2D drawings that don't use the 3D camera
 void ScrapeVisualSystem::selfDrawBackground()
 {
@@ -291,6 +287,7 @@ void ScrapeVisualSystem::selfDrawBackground()
     }
 }
 
+//--------------------------------------------------------------
 // this is called when your system is no longer drawing.
 // Right after this selfUpdate() and selfDraw() won't be called any more
 void ScrapeVisualSystem::selfEnd()
@@ -300,7 +297,7 @@ void ScrapeVisualSystem::selfEnd()
     }
     boxes.clear();
     
-    domeCamera.end();
+//    domeCamera.end();
 }
 
 // this is called when you should clear all the memory and delet anything you made in setup
@@ -341,6 +338,7 @@ void ScrapeVisualSystem::selfMouseReleased(ofMouseEventArgs& data)
     
 }
 
+//--------------------------------------------------------------
 void ScrapeVisualSystem::doGrow()
 {
     // Clear the previous boxes.
@@ -389,6 +387,7 @@ void ScrapeVisualSystem::doGrow()
     bGrowing = true;
 }
 
+//--------------------------------------------------------------
 void ScrapeVisualSystem::doShrink()
 {
     // Shrink all the boxes back to 0 in sync.
