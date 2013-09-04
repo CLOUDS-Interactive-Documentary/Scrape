@@ -117,6 +117,9 @@ protected:
     
     ofFbo contentFbo;
     float fboSize;
+
+    ofImage screenGrab;
+    bool bOverlay;
     
 	ofxUISuperCanvas* customGui;
     

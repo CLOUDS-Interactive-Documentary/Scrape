@@ -44,6 +44,7 @@ void ScrapeVisualSystem::selfSetupGui()
 	
     customGui->addSpacer();
     
+    bOverlay = true;
     fadeInDuration = 500;
     fadeInDelay = 1000;
     fadeOutDuration = 500;
@@ -52,6 +53,7 @@ void ScrapeVisualSystem::selfSetupGui()
 	customGui->addSlider("Fade In Delay", 0, 3000, &fadeInDelay);
 	customGui->addSlider("Fade Out Duration", 50, 3000, &fadeOutDuration);
 	customGui->addSlider("Fade Out Delay", 0, 3000, &fadeOutDelay);
+    customGui->addToggle("DO OVERLAY", &bOverlay);
     
 	ofAddListener(customGui->newGUIEvent, this, &ScrapeVisualSystem::selfGuiEvent);
 	
@@ -124,7 +126,13 @@ void ScrapeVisualSystem::selfUpdate()
 {    
     if (bComplete) {
         if (bGrowing) {
-            doShrink();
+            if (bOverlay) {
+                screenGrab.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
+                doGrow();
+            }
+            else {
+                doShrink();
+            }
         }
         else {
             doGrow();
@@ -151,7 +159,14 @@ void ScrapeVisualSystem::selfUpdate()
     // Draw the textures into the FBO.
     contentFbo.begin();
     {
+        // Need to disable depth test or else the overlay won't work.
+        glDisable(GL_DEPTH_TEST);
+        
         ofClear(0, 0);
+        
+        if (bOverlay) {
+            screenGrab.draw(0, 0, ofGetWidth(), ofGetHeight());
+        }
         
         // Draw the Scrape boxes.
         for (int i = 0; i < boxes.size(); i++) {
