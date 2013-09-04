@@ -8,7 +8,9 @@
 #ifdef AVF_PLAYER
 #include "ofxAVFVideoPlayer.h"
 #endif
+#include "ofxBillboard.h"
 
+//--------------------------------------------------------------
 static const GLint kFormats[] =
 {
     GL_RGB,
@@ -30,17 +32,22 @@ void ScrapeVisualSystem::selfSetupGui()
 	customGui->setName("Scrape");
 	customGui->setWidgetFontSize(OFX_UI_FONT_SMALL);
     
-    b3DToggle = false;
-    customGui->addToggle("Go 3D!", &b3DToggle);
+    mode = MODE_2D;
+    vector<string> modes;
+	modes.push_back("2D");
+	modes.push_back("DOME");
+	modes.push_back("EXPLODE");
+	modeRadio = customGui->addRadio("MODE", modes, OFX_UI_ORIENTATION_VERTICAL);
+    modeRadio->activateToggle("2D");
 
     customGui->addSpacer();
     
     boxDivWidth = 24;
     boxDivHeight = 24;
     boxMaxSubDivs = 8;
-    customGui->addSlider("Box Div Width", 1, 256, &boxDivWidth);
-	customGui->addSlider("Box Div Height", 1, 256, &boxDivHeight);
-	customGui->addSlider("Box Max Subdivisions", 1, 24, &boxMaxSubDivs);
+    customGui->addSlider("BOX DIV WIDTH", 1, 256, &boxDivWidth);
+	customGui->addSlider("BOX DIV HEIGHT", 1, 256, &boxDivHeight);
+	customGui->addSlider("BOX MAX SUBDIVISIONS", 1, 24, &boxMaxSubDivs);
 	
     customGui->addSpacer();
     
@@ -49,11 +56,11 @@ void ScrapeVisualSystem::selfSetupGui()
     fadeInDelay = 1000;
     fadeOutDuration = 500;
     fadeOutDelay = 500;
-	customGui->addSlider("Fade In Duration", 50, 3000, &fadeInDuration);
-	customGui->addSlider("Fade In Delay", 0, 3000, &fadeInDelay);
-	customGui->addSlider("Fade Out Duration", 50, 3000, &fadeOutDuration);
-	customGui->addSlider("Fade Out Delay", 0, 3000, &fadeOutDelay);
     customGui->addToggle("DO OVERLAY", &bOverlay);
+	customGui->addSlider("FADE IN DURATION", 50, 3000, &fadeInDuration);
+	customGui->addSlider("FADE IN DELAY", 0, 3000, &fadeInDelay);
+	customGui->addSlider("FADE OUT DURATION", 50, 3000, &fadeOutDuration);
+	customGui->addSlider("FADE OUT DELAY", 0, 3000, &fadeOutDelay);
     
 	ofAddListener(customGui->newGUIEvent, this, &ScrapeVisualSystem::selfGuiEvent);
 	
@@ -61,8 +68,20 @@ void ScrapeVisualSystem::selfSetupGui()
 	guimap[customGui->getName()] = customGui;
 }
 
-void ScrapeVisualSystem::selfGuiEvent(ofxUIEventArgs &e){
-
+void ScrapeVisualSystem::selfGuiEvent(ofxUIEventArgs &e)
+{
+    if (e.getName() == "2D" && e.getToggle()->getValue()) {
+        mode = MODE_2D;
+        cout << "Setting mode to 2D" << endl;
+    }
+    else if (e.getName() == "DOME" && e.getToggle()->getValue()) {
+        mode = MODE_DOME;
+        cout << "Setting mode to DOME" << endl;
+    }
+    else if (e.getName() == "EXPLODE" && e.getToggle()->getValue()) {
+        mode = MODE_EXPLODE;
+        cout << "Setting mode to EXPLODE" << endl;
+    }
 }
 
 //Use system gui for global or logical settings, for exmpl
@@ -172,6 +191,15 @@ void ScrapeVisualSystem::selfUpdate()
         for (int i = 0; i < boxes.size(); i++) {
             ofSetColor(255, 255 * boxes[i]->alpha);
             boxes[i]->tex.draw(boxes[i]->x - (boxes[i]->w * boxes[i]->scale) / 2.0, boxes[i]->y - (boxes[i]->h * boxes[i]->scale) / 2.0, boxes[i]->w * boxes[i]->scale, boxes[i]->h * boxes[i]->scale);
+            
+//            // Debug!
+//            static int debugColors[] = { 0xcc0000, 0x00cc00, 0x0000cc, 0xcc00cc, 0xcccc00, 0x00cccc };
+//            static int numDebugColors = 6;
+//            ofSetHexColor(debugColors[i % numDebugColors]);
+//            ofRect(boxes[i]->x - (boxes[i]->w * boxes[i]->scale) / 2.0, boxes[i]->y - (boxes[i]->h * boxes[i]->scale) / 2.0, boxes[i]->w * boxes[i]->scale, boxes[i]->h * boxes[i]->scale);
+//            ofRect(boxes[i]->x - (boxes[i]->w) / 2.0, boxes[i]->y - (boxes[i]->h) / 2.0, boxes[i]->w, boxes[i]->h);
+//            ofSetColor(255);
+//            ofCircle(boxes[i]->x, boxes[i]->y, 5);
         }
         
         // Draw some outlines.
@@ -194,24 +222,59 @@ void ScrapeVisualSystem::selfUpdate()
 // you can change the camera by returning getCameraRef()
 void ScrapeVisualSystem::selfDraw()
 {
-    if (!b3DToggle) return;
-    
-    // Scale up the texture since we're not working with normalized tex coords.
-    glMatrixMode(GL_TEXTURE);
-    glPushMatrix();
-    ofScale(contentFbo.getWidth(), contentFbo.getHeight());
-    glMatrixMode(GL_MODELVIEW);
-    
-    // Draw the sphere.
-    contentFbo.getTextureReference().bind();
-    {
-        ofSphere(0, 0, 0, 1280);
+    if (mode == MODE_DOME) {
+        // Scale up the texture since we're not working with normalized tex coords.
+        glMatrixMode(GL_TEXTURE);
+        glPushMatrix();
+        ofScale(contentFbo.getWidth(), contentFbo.getHeight());
+        glMatrixMode(GL_MODELVIEW);
+        
+        // Draw the sphere.
+        contentFbo.getTextureReference().bind();
+        {
+            ofSphere(0, 0, 0, 1280);
+        }
+        contentFbo.getTextureReference().unbind();
+        
+        glMatrixMode(GL_TEXTURE);
+        glPopMatrix();
+        glMatrixMode(GL_MODELVIEW);
     }
-    contentFbo.getTextureReference().unbind();
-    
-    glMatrixMode(GL_TEXTURE);
-    glPopMatrix();
-    glMatrixMode(GL_MODELVIEW);
+    else if (mode == MODE_EXPLODE) {
+        // Draw the planes.
+        contentFbo.getTextureReference().bind();
+        {
+            {
+                for (int i = 0; i < boxes.size(); i++) {
+                    // Convert the spherical coordinates to their Cartesian counterparts.
+                    float x = boxes[i]->radius * sinf(boxes[i]->theta) * cosf(boxes[i]->phi);
+                    float y = boxes[i]->radius * sinf(boxes[i]->theta) * sinf(boxes[i]->phi);
+                    float z = boxes[i]->radius * cosf(boxes[i]->theta);
+                    
+                    ofPushMatrix();
+                    billBoard(getCameraRef().getGlobalPosition(), ofVec3f(x, y, z));
+                    
+//                    ofxBillboardBeginSpherical(ofVec3f(), ofVec3f(x, y, z));
+                    
+                    glBegin(GL_QUADS);
+
+                    glTexCoord2f(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0);
+                    glVertex3f(x - boxes[i]->w / 2.0, y - boxes[i]->h / 2.0, z);
+                    glTexCoord2f(boxes[i]->x + boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0);
+                    glVertex3f(x + boxes[i]->w / 2.0, y - boxes[i]->h / 2.0, z);
+                    glTexCoord2f(boxes[i]->x + boxes[i]->w / 2.0, boxes[i]->y + boxes[i]->h / 2.0);
+                    glVertex3f(x + boxes[i]->w / 2.0, y + boxes[i]->h / 2.0, z);
+                    glTexCoord2f(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y + boxes[i]->h / 2.0);
+                    glVertex3f(x - boxes[i]->w / 2.0, y + boxes[i]->h / 2.0, z);
+                    
+                    glEnd();
+
+                    ofxBillboardEnd();
+                }
+            }
+        }
+        contentFbo.getTextureReference().unbind();
+    }
 }
 
 // draw any debug stuff here
@@ -223,9 +286,9 @@ void ScrapeVisualSystem::selfDrawDebug()
 // or you can use selfDrawBackground to do 2D drawings that don't use the 3D camera
 void ScrapeVisualSystem::selfDrawBackground()
 {
-    if (b3DToggle) return;
-    
-    contentFbo.draw(0, 0);
+    if (mode == MODE_2D) {
+        contentFbo.draw(0, 0);
+    }
 }
 
 // this is called when your system is no longer drawing.
@@ -293,17 +356,30 @@ void ScrapeVisualSystem::doGrow()
     boxFitting.setup(fboSize, fboSize, boxDivWidth, boxDivHeight, boxMaxSubDivs);
     boxFitting.generate(ofGetSystemTime());
     
-    // Build some scrape boxes with the box fitting data and grow them.
+    // Build some scrape boxes with the box fitting data.
     for (int i = 0; i < boxFitting.boxes.size(); i++) {
         ScrapeBox * box =  new ScrapeBox();
+        
+        // Set the 2D box params.
         box->x = boxFitting.boxes[i].x + boxFitting.boxes[i].w / 2.0;
         box->y = boxFitting.boxes[i].y + boxFitting.boxes[i].h / 2.0;
         box->w = boxFitting.boxes[i].w;
         box->h = boxFitting.boxes[i].h;
+        
+        // Set the tweenable params.
         box->scale = 0.0f;
         box->alpha = 1.0f;
+        
+        // Set the 3D box params.
+        box->theta = ofRandomuf() * TWO_PI;
+        box->phi = ofRandomuf() * TWO_PI;
+        box->radius = ofRandomuf() * 300 + 1000;
+        
+        // Allocate the texture, but keep it empty!
         box->tex.allocate(box->w, box->h, kFormats[(int)ofRandom(kNumFormats)]);
 //        box->tex.allocate(box->w, box->h, GL_RGBA);
+        
+        // Start growing the box.
         box->tween.setParameters(i, easing, ofxTween::easeOut, 0, 1, ofRandom(fadeInDuration), ofRandom(fadeInDelay));
         box->tween.start();
         

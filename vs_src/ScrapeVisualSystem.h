@@ -19,10 +19,24 @@
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
+enum ScrapeMode
+{
+    MODE_2D,
+    MODE_DOME,
+    MODE_EXPLODE
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 struct ScrapeBox : ofxMtlBox
 {
     float scale;
     float alpha;
+    
+    float theta;
+    float phi;
+    float radius;
+    
     ofTexture tex;
     ofxTween tween;
 };
@@ -101,7 +115,6 @@ public:
     void selfMousePressed(ofMouseEventArgs& data);
     void selfMouseReleased(ofMouseEventArgs& data);
 	
-
     void doGrow();
     void doShrink();
     
@@ -122,8 +135,9 @@ protected:
     bool bOverlay;
     
 	ofxUISuperCanvas* customGui;
+    ofxUIRadio * modeRadio;
     
-    bool b3DToggle;
+    ScrapeMode mode;
     
 	float boxDivWidth;
     float boxDivHeight;
