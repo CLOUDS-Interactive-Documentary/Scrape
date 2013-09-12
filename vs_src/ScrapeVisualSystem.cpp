@@ -237,53 +237,37 @@ void ScrapeVisualSystem::selfDraw()
     }
     else if (mode == MODE_EXPLODE) {
         ofSetColor(255);
-        ofSphere(ofVec3f(), 25);
         
         // Draw the planes.
-//        contentFbo.getTextureReference().bind();
+        contentFbo.getTextureReference().bind();
         {
+            ofVec3f origin(0, 0, 0);
+            
             for (int i = 0; i < boxes.size(); i++) {
                 // Convert the spherical coordinates to their Cartesian counterparts.
-                float x = boxes[i]->radius * sinf(boxes[i]->theta) * cosf(boxes[i]->phi);
-                float y = boxes[i]->radius * sinf(boxes[i]->theta) * sinf(boxes[i]->phi);
-                float z = boxes[i]->radius * cosf(boxes[i]->theta);
+                ofVec3f objPos(boxes[i]->radius * sinf(boxes[i]->theta) * cosf(boxes[i]->phi),
+                               boxes[i]->radius * sinf(boxes[i]->theta) * sinf(boxes[i]->phi),
+                               boxes[i]->radius * cosf(boxes[i]->theta));
                 
-                ofPushMatrix();
-                ofTranslate(x, y, z);
-                
-                GLfloat modelview[16];
-                glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
-                ofVec3f translation(modelview[12], modelview[13], modelview[14]);
-                
-                ofVec3f absPos(x, y, z);
-                absPos += translation;
-                
-                
-//                ofPushMatrix();
-//                billBoard(ofVec3f(), translation);
-                
-                ofxBillboardBeginSpherical(ofVec3f(), translation);
-
-                ofRect(-25, -25, 50, 50);
-                
-//                glBegin(GL_QUADS);
-//
-//                glTexCoord2f(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0);
-//                glVertex3f(x - boxes[i]->w / 2.0, y - boxes[i]->h / 2.0, z);
-//                glTexCoord2f(boxes[i]->x + boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0);
-//                glVertex3f(x + boxes[i]->w / 2.0, y - boxes[i]->h / 2.0, z);
-//                glTexCoord2f(boxes[i]->x + boxes[i]->w / 2.0, boxes[i]->y + boxes[i]->h / 2.0);
-//                glVertex3f(x + boxes[i]->w / 2.0, y + boxes[i]->h / 2.0, z);
-//                glTexCoord2f(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y + boxes[i]->h / 2.0);
-//                glVertex3f(x - boxes[i]->w / 2.0, y + boxes[i]->h / 2.0, z);
-//                
-//                glEnd();
-
+                ofxBillboardBeginSphericalObvious(origin, objPos);
+                {
+                    glBegin(GL_QUADS);
+                    {
+                        glTexCoord2f(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0);
+                        glVertex3f(-boxes[i]->w / 2.0, -boxes[i]->h / 2.0, 0);
+                        glTexCoord2f(boxes[i]->x + boxes[i]->w / 2.0, boxes[i]->y - boxes[i]->h / 2.0);
+                        glVertex3f(boxes[i]->w / 2.0, -boxes[i]->h / 2.0, 0);
+                        glTexCoord2f(boxes[i]->x + boxes[i]->w / 2.0, boxes[i]->y + boxes[i]->h / 2.0);
+                        glVertex3f(boxes[i]->w / 2.0, boxes[i]->h / 2.0, 0);
+                        glTexCoord2f(boxes[i]->x - boxes[i]->w / 2.0, boxes[i]->y + boxes[i]->h / 2.0);
+                        glVertex3f(-boxes[i]->w / 2.0, boxes[i]->h / 2.0, 0);
+                    }
+                    glEnd();
+                }
                 ofxBillboardEnd();
-                ofPopMatrix();
             }
         }
-//        contentFbo.getTextureReference().unbind();
+        contentFbo.getTextureReference().unbind();
     }
 }
 
