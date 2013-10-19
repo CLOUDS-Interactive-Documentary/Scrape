@@ -1,18 +1,28 @@
 <Canvas>
     <Kind>42</Kind>
     <Name>Presets</Name>
-    <IsMinified>0</IsMinified>
-    <XPosition>213.000045776</XPosition>
-    <YPosition>826.000000000</YPosition>
+    <IsMinified>1</IsMinified>
+    <XPosition>1.000000000</XPosition>
+    <YPosition>218.000000000</YPosition>
 </Canvas>
 <Widget>
     <Kind>2</Kind>
-    <Name>2D STACKS (BIG)</Name>
+    <Name>BIG STACKS</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>DataDeathStar</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>GRANULAR</Name>
     <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
-    <Name>2D STACKS (SMALL)</Name>
+    <Name>IN YOUR FACE</Name>
     <Value>0</Value>
 </Widget>
 <Widget>
@@ -22,16 +32,11 @@
 </Widget>
 <Widget>
     <Kind>2</Kind>
-    <Name>TONY&apos;S DEATH STAR</Name>
+    <Name>STACK BURSTS</Name>
     <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
-    <Name>SMALL STACKS</Name>
+    <Name>Tony&apos;s Death Star</Name>
     <Value>0</Value>
-</Widget>
-<Widget>
-    <Kind>2</Kind>
-    <Name>BIG STACKS</Name>
-    <Value>1</Value>
 </Widget>
